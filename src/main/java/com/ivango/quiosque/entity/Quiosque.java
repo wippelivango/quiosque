@@ -1,4 +1,4 @@
-package com.ivango.quiosque.entities;
+package com.ivango.quiosque.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
