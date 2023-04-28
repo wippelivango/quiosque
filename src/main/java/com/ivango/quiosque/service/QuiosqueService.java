@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuiosqueService {
@@ -19,6 +20,10 @@ public class QuiosqueService {
 
     public List<Quiosque> buscarQuiosques() {
         return quiosqueRepository.findAll();
+    }
+
+    public Optional<Quiosque> buscarQuiosque(Long id) {
+        return quiosqueRepository.findById(id);
     }
 
     public Quiosque atualizarQuiosque(Quiosque quiosque) {

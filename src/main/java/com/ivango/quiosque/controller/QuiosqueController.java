@@ -12,34 +12,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class QuiosqueController {
 
     @Autowired
     private QuiosqueService quiosqueService;
-/*
+
+    /*
+        @GetMapping("/quiosque")
+        public String listar() {
+            return "Hello World!";
+        }
+    */
+
     @GetMapping("/quiosque")
-    public String listar() {
-        return "Hello World!";
-    }
-*/
-    @GetMapping("/buscar")
     public List<Quiosque> listarQuiosques() {
         return quiosqueService.buscarQuiosques();
     }
 
-    @PostMapping("/salvar")
+    @GetMapping("/quiosque/{id}")
+    public Optional<Quiosque> listarQuiosques(@PathVariable Long id) {
+        return quiosqueService.buscarQuiosque(id);
+    }
+
+    @PostMapping("/quiosque")
     public Quiosque adicionarQuiosque(@RequestBody Quiosque quiosque) {
         return quiosqueService.salvarQuiosque(quiosque);
     }
 
-    @PutMapping("/atualizar")
+    @PutMapping("/quiosque")
     public Quiosque atualizarQuiosque(@RequestBody Quiosque quiosque) {
         return quiosqueService.atualizarQuiosque(quiosque);
     }
 
-    @DeleteMapping("/remover/{id}")
+    @DeleteMapping("/quiosque/{id}")
     public String removerQuiosque(@PathVariable Long id) {
         return quiosqueService.removerQuiosque(id);
     }
