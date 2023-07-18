@@ -18,8 +18,13 @@ public class QuiosqueService {
         return quiosqueRepository.save(quiosque);
     }
 
-    public List<Quiosque> buscarQuiosques() {
-        return quiosqueRepository.findAll();
+    public List<Quiosque> buscarQuiosques(String nome) {
+        nome = "%" + nome + "%";
+        return quiosqueRepository.findByNomeLike(nome);
+    }
+
+    public Long contarQuiosques() {
+        return quiosqueRepository.count();
     }
 
     public Optional<Quiosque> buscarQuiosque(Long id) {
