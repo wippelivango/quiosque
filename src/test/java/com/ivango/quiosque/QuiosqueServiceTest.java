@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 public class QuiosqueServiceTest {
@@ -55,24 +57,20 @@ public class QuiosqueServiceTest {
 
     @Test
     public void testBuscarQuiosques() {
-        // Create some mock Quiosque objects to return when the findAll method is called
-        Quiosque quiosque1 = new Quiosque();
-        quiosque1.setId(1L);
-        quiosque1.setNome("Quiosque A");
+        // Arrange
+        String nome = "Test";
+        List<Quiosque> expectedQuiosques = new ArrayList<>();
+        expectedQuiosques.add(new Quiosque());
+        expectedQuiosques.add(new Quiosque());
 
-        Quiosque quiosque2 = new Quiosque();
-        quiosque2.setId(2L);
-        quiosque2.setNome("Quiosque B");
+        when(quiosqueRepository.findByNomeLike(anyString())).thenReturn(expectedQuiosques);
 
-        // Set up the mock repository object to return the mock Quiosque objects when findAll is called
-        when(quiosqueRepository.findAll()).thenReturn(Arrays.asList(quiosque1, quiosque2));
+        // Act
+        List<Quiosque> actualQuiosques = quiosqueService.buscarQuiosques(nome);
 
-        // Call the service method and assert that the returned List<Quiosque> object matches the mock List<Quiosque> object
-        List<Quiosque> returnedQuiosques = quiosqueService.buscarQuiosques();
-        assertEquals(Arrays.asList(quiosque1, quiosque2), returnedQuiosques);
-
-        // Verify that the findAll method was called on the mock repository object
-        Mockito.verify(quiosqueRepository).findAll();
+        // Assert
+        assertEquals(expectedQuiosques, actualQuiosques);
+        Mockito.verify(quiosqueRepository, times(1)).findByNomeLike("%" + nome + "%");
     }
 
     @Test
